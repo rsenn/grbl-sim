@@ -18,6 +18,7 @@
 
 # PLATFORM   = WINDOWS
 # PLATFORM   = OSX
+CC = gcc
 PLATFORM   = LINUX
 GRBL_ROOT = ../grbl
 GRBL_DIR = ../grbl/grbl
@@ -37,10 +38,14 @@ GRBL_SIM_OBJECTS = grbl_interface.o  $(GRBL_BASE_OBJECTS) $(GRBL_OVERRIDE_OBJECT
 GRBL_VAL_OBJECTS = validator.o overridden_report.o $(GRBL_BASE_OBJECTS) $(AVR_OBJECTS) system_declares.o
 
 CLOCK      = 16000000
-SIM_EXE_NAME   = grbl_sim.exe
-VALIDATOR_NAME = gvalidate.exe
-FLAGS = -g -O3
-COMPILE    = $(CC) -Wall $(FLAGS) -DF_CPU=$(CLOCK)  -include config.h -I. -I$(GRBL_ROOT) -DPLAT_$(PLATFORM)
+SIM_EXE_NAME   = grbl_sim$(EXEEXT)
+VALIDATOR_NAME = gvalidate$(EXEEXT)
+ifeq ($(DEBUG),)
+CFLAGS = -g -O3
+else
+CFLAGS = -g3 -ggdb -O0
+endif
+COMPILE    = $(CC) -Wall $(CFLAGS) -DF_CPU=$(CLOCK)  -include config.h -I. -I$(GRBL_ROOT) -DPLAT_$(PLATFORM)
 LINUX_LIBRARIES = -lrt -pthread
 OSX_LIBRARIES =
 WINDOWS_LIBRARIES =
@@ -48,6 +53,9 @@ WINDOWS_LIBRARIES =
 # symbolic targets:
 all:	main gvalidate
 
+
+install:
+	install -m755 grbl_sim /usr/local/bin/
 new: clean main gvalidate
 
 clean:

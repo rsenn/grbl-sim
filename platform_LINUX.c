@@ -88,11 +88,11 @@ void enable_kbhit(int dir)
 //detect key pressed
 int kbhit (void)
 {
-  struct timeval tv={0};
+  struct timeval tv={0,0};
   fd_set rdfs={{0}};
   int retval;
 
-  /* tv.tv_sec = 0; */
+/* tv.tv_sec = 1;*/
   /* tv.tv_usec = 0; */
  
   /* FD_ZERO(&rdfs); */
