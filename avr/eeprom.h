@@ -1,3 +1,3 @@
 
-#include "../eeprom.h"
+#include "grbl/eeprom.h"
 void eeprom_close();

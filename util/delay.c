@@ -22,7 +22,7 @@
 */
 
 #include "platform.h"
-#include "../simulator.h"
+#include "simulator.h"
 
 void _delay_ms(int i) {
   platform_sleep(i*1000/sim.speedup);

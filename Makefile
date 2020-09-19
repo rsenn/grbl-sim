@@ -19,11 +19,13 @@
 # PLATFORM   = WINDOWS
 # PLATFORM   = OSX
 PLATFORM   = LINUX
+GRBL_ROOT = ../grbl
+GRBL_DIR = ../grbl/grbl
 
 #The original grbl code, except those files overriden by sim
-GRBL_BASE_OBJECTS =   ../protocol.o ../planner.o ../settings.o ../print.o ../nuts_bolts.o  ../stepper.o ../gcode.o ../spindle_control.o ../motion_control.o ../limits.o ../coolant_control.o ../probe.o ../system.o ../jog.o 
+GRBL_BASE_OBJECTS =   $(GRBL_DIR)/protocol.o $(GRBL_DIR)/planner.o $(GRBL_DIR)/settings.o $(GRBL_DIR)/print.o $(GRBL_DIR)/nuts_bolts.o  $(GRBL_DIR)/stepper.o $(GRBL_DIR)/gcode.o $(GRBL_DIR)/spindle_control.o $(GRBL_DIR)/motion_control.o $(GRBL_DIR)/limits.o $(GRBL_DIR)/coolant_control.o $(GRBL_DIR)/probe.o $(GRBL_DIR)/system.o $(GRBL_DIR)/jog.o 
 # grbl files that have simulator overrrides 
-GRBL_OVERRIDE_OBJECTS =  ../main.o ../serial.o ../report.o
+GRBL_OVERRIDE_OBJECTS =  $(GRBL_DIR)/main.o $(GRBL_DIR)/serial.o $(GRBL_DIR)/report.o
 
 #AVR interface simulation
 AVR_OBJECTS  = avr/interrupt.o avr/pgmspace.o  avr/io.o  avr/eeprom.o grbl_eeprom_extensions.o
@@ -38,7 +40,7 @@ CLOCK      = 16000000
 SIM_EXE_NAME   = grbl_sim.exe
 VALIDATOR_NAME = gvalidate.exe
 FLAGS = -g -O3
-COMPILE    = $(CC) -Wall $(FLAGS) -DF_CPU=$(CLOCK)  -include config.h -I. -DPLAT_$(PLATFORM)
+COMPILE    = $(CC) -Wall $(FLAGS) -DF_CPU=$(CLOCK)  -include config.h -I. -I$(GRBL_ROOT) -DPLAT_$(PLATFORM)
 LINUX_LIBRARIES = -lrt -pthread
 OSX_LIBRARIES =
 WINDOWS_LIBRARIES =
@@ -63,14 +65,14 @@ gvalidate: $(GRBL_VAL_OBJECTS)
 %.o: %.c
 	$(COMPILE) -c $< -o $@
 
-../planner.o: ../planner.c
+$(GRBL_DIR)/planner.o: $(GRBL_DIR)/planner.c
 	$(COMPILE) -include planner_inject_accessors.c -c $< -o $@
 
-../serial.o: ../serial.c
+$(GRBL_DIR)/serial.o: $(GRBL_DIR)/serial.c
 	$(COMPILE) -include serial_hooks.h -c $< -o $@
 
-../main.o: ../main.c
+$(GRBL_DIR)/main.o: $(GRBL_DIR)/main.c
 	$(COMPILE) -include rename_main.h -c $< -o $@
 
-overridden_report.o: ../report.c
+overridden_report.o: $(GRBL_DIR)/report.c
 	$(COMPILE) -include rename_report_status_message.h -c $< -o $@

@@ -1,4 +1,4 @@
-#include "../planner.h"
+#include "grbl/planner.h"
 
 static  plan_block_t block_buffer[BLOCK_BUFFER_SIZE];  // A ring buffer for motion instructions
 plan_block_t *get_block_buffer() { return block_buffer; }

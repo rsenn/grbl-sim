@@ -23,9 +23,9 @@
 #include <stdio.h>
 #include "simulator.h"
 
-#include "../system.h"
-#include "../planner.h"
-#include "../settings.h"
+#include "grbl/system.h"
+#include "grbl/planner.h"
+#include "grbl/settings.h"
 
 
 int block_position[N_AXIS]= {0}; //step count after most recently planned block

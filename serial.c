@@ -28,7 +28,7 @@
 #include "avr/io.h"
 #include "avr/interrupt.h"
 
-#include "../serial.h"
+#include "grbl/serial.h"
 
 
 //prototypes for overridden functions

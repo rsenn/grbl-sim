@@ -24,14 +24,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "../nuts_bolts.h"
-#include "../settings.h"
-#include "../protocol.h"
-#include "../report.h"
-#include "../system.h"
-#include "../gcode.h"
-#include "../planner.h"
-#include "../serial.h"
+#include "grbl/nuts_bolts.h"
+#include "grbl/settings.h"
+#include "grbl/protocol.h"
+#include "grbl/report.h"
+#include "grbl/system.h"
+#include "grbl/gcode.h"
+#include "grbl/planner.h"
+#include "grbl/serial.h"
 #include "avr/io.h"
 
 
